@@ -17,7 +17,7 @@ class MoneyCounter:
     def process(self, image: Image.Image):
         img = np.array(image.convert("RGB"))
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-        results = self.model.predict(img, device=self.device, conf=0.25, imgsz=960, verbose=False)
+        results = self.model.predict(img, device=self.device, conf=0.25, imgsz=1280, verbose=False)
         annotated_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         total_sum = 0
 
