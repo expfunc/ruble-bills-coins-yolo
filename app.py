@@ -18,12 +18,12 @@ url_input = st.text_input("или вставь URL картинки")
 
 image = None
 if uploaded_file:
-    image = Image.open(uploaded_file).convert("RGB")
+    image = Image.open(uploaded_file)
 elif url_input:
     try:
         resp = requests.get(url_input, timeout=8)
         resp.raise_for_status()
-        image = Image.open(io.BytesIO(resp.content)).convert("RGB")
+        image = Image.open(io.BytesIO(resp.content))
     except Exception as e:
         st.error(f"Ошибка загрузки: {e}")
 
