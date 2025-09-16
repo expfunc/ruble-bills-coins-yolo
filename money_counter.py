@@ -27,9 +27,9 @@ class MoneyCounter:
             x1, y1, x2, y2 = box.xyxy[0].int().tolist()
 
             label = f"{value} RUB"
-            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.putText(
-                img,
+                image,
                 label,
                 (x1, y1 - 5),
                 cv2.FONT_HERSHEY_SIMPLEX,
@@ -38,4 +38,4 @@ class MoneyCounter:
                 2,
             )
 
-        return img, total_sum
+        return image, total_sum
