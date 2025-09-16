@@ -31,6 +31,6 @@ if image is not None:
     st.image(image, caption="Исходное изображение", use_column_width=True)
 
     if st.button("Посчитать сумму"):
-        annotated_img, df, total = st.session_state.counter.process(image)
+        annotated_img, total = st.session_state.counter.process(image)
         st.success(f"Итого: {total} руб.")
         st.image(annotated_img, caption="Размеченное изображение", use_column_width=True)
