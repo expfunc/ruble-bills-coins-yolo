@@ -15,8 +15,7 @@ class MoneyCounter:
             return 0
 
     def process(self, image: Image.Image):
-        img = np.array(image.convert("RGB"))
-        results = self.model.predict(img, device=self.device, verbose=False)
+        results = self.model.predict(image, device=self.device, verbose=False)
         total_sum = 0
 
         for box in results[0].boxes:
