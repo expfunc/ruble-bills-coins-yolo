@@ -9,7 +9,7 @@ st.title("Russian Money Counter")
 st.caption("Загрузи фото или URL, чтобы получить разметку и сумму рублей")
 
 # загрузка модели
-model_path = "models/best.pt"
+model_path = "models/model.pt"
 if "counter" not in st.session_state:
     st.session_state.counter = MoneyCounter(model_path=model_path, device="cpu")
 
