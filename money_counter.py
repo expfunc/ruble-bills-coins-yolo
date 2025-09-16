@@ -15,8 +15,9 @@ class MoneyCounter:
             return 0
 
     def process(self, image: Image.Image):
-        image = np.array(image)
-        results = self.model.predict(image, device=self.device, verbose=False)
+        img = np.array(image.convert("RGB"))
+        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+        results = self.model.predict(img, device=self.device, verbose=False)
         total_sum = 0
 
         for box in results[0].boxes:
@@ -28,9 +29,9 @@ class MoneyCounter:
             x1, y1, x2, y2 = box.xyxy[0].int().tolist()
 
             label = f"{value} RUB"
-            cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.putText(
-                image,
+                img,
                 label,
                 (x1, y1 - 5),
                 cv2.FONT_HERSHEY_SIMPLEX,
@@ -39,4 +40,4 @@ class MoneyCounter:
                 2,
             )
 
-        return image, total_sum
+        return img, total_sum
