@@ -18,7 +18,8 @@ class MoneyCounter:
         img = np.array(image.convert("RGB"))
         img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
         results = self.model.predict(img, device=self.device, conf=0.25, verbose=False)
-        annotated_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    
+        annotated_img = img.copy()
         total_sum = 0
 
         for box in results[0].boxes:
@@ -26,19 +27,24 @@ class MoneyCounter:
             class_name = self.model.names[cls_id]
             value = self._parse_classname(class_name)
             total_sum += value
-            
+    
             x1, y1, x2, y2 = box.xyxy[0].int().tolist()
-
+    
             label = f"{value} RUB"
-            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+    
+            text_y = max(y1 - 5, 15)
             cv2.putText(
                 annotated_img,
                 label,
-                (x1, y1 - 5),
+                (x1, text_y),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.6,
                 (0, 255, 0),
                 2,
             )
-
+    
+        annotated_img = cv2.cvtColor(annotated_img, cv2.COLOR_BGR2RGB)
+    
         return annotated_img, total_sum
+
